@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick='test()'>click</button>
+</body>
+<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script type="text/javascript">
+    function test() {
+        axios.post('/signature')
+        .then(function(res){
+            console.log(res)
+        })
+        .catch(function(res){
+            console.log(res)
+        })
+    }
+</script>
+</html>
