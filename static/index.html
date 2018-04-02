@@ -8,14 +8,29 @@
     <button onclick='test()'>click</button>
 </body>
 <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script type="text/javascript" src='http://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <script type="text/javascript">
     function test() {
         axios.post('/signature')
         .then(function(res){
-            console.log(res)
+            console.log(res);
+            wxConfig(res.data);
         })
         .catch(function(res){
             console.log(res)
+        })
+    }
+    function wxConfig (data) {
+        wx.config({
+            debug:true,
+            appId:data.appId,
+            timestamp:data.timestamp,
+            nonceStr:data.nonceStr,
+            signature:data.signature,
+            jsApiList:['chooseImage']
+        })
+        wx.ready(function(){
+            console.log('ready');
         })
     }
 </script>
