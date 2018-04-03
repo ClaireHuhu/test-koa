@@ -6,12 +6,12 @@
 </head>
 <body>
     <button onclick='test()'>click</button>
+    <img id='img' width="40%" height="40%" />
 </body>
 <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
 <script type="text/javascript" src='http://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <script type="text/javascript">
-    function test() {
-        axios.post('/signature')
+    axios.post('/signature')
         .then(function(res){
             console.log(res);
             wxConfig(res.data);
@@ -19,7 +19,6 @@
         .catch(function(res){
             console.log(res)
         })
-    }
     function wxConfig (data) {
         wx.config({
             debug:true,
@@ -33,5 +32,19 @@
             console.log('ready');
         })
     }
+    function test() {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var img = document.getElementById('img');
+                img.src = res.localIds;
+                ctx.drawImage(img,0,0);
+            // var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+        }
+    });
+    }
+    
 </script>
 </html>

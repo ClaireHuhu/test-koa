@@ -28,7 +28,7 @@ async function getToken (id) {
   return axios.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+id+'&secret='+wx.appsecret)
 }
 async function getTicket (token) {
-	return axios.get('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+token+'&type=wx_card')
+	return axios.get('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+token+'&type=jsapi')
 }
 
 
@@ -38,8 +38,8 @@ app.use(route.post('/signature', async function(ctx,next){
 	const token = await getToken(wx.appId);
 	wx.access_token = token.data.access_token;
 	const ticket = await getTicket(wx.access_token);
-	wx.api_ticket = token.data.ticket;
-	wx.timestamp = Math.floor(Date.now()/1000) + '';
+	wx.api_ticket = ticket.data.ticket;
+	wx.timestamp = Math.floor(Date.now()/1000);
 	wx.nonceStr = getNonceStr();
 	const string = 'jsapi_ticket='+wx.api_ticket+'&noncestr='+wx.nonceStr+'&timestamp='+wx.timestamp+'&url='+wx.url;
 	wx.signature = sha1(string);
